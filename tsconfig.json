@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noEmit": false,
+        "outDir": "lib"
+    },
+    "compileOnSave": true,
+    "buildOnSave": true,
+    "filesGlob": [
+        "src/*.ts",
+        "src/**/*.ts",
+        "src/typings/**/*.d.ts"
+    ],
+    "files": [
+        "src/index.ts",
+        "src/helpers/babelModules.ts",
+        "src/helpers/fileExists.ts",
+        "src/helpers/importPaths.ts",
+        "src/helpers/overrideRequire.ts",
+        "src/typings/chai/chai.d.ts",
+        "src/typings/cr/cr.d.ts",
+        "src/typings/cr/globals.d.ts",
+        "src/typings/es6-promise/es6-promise.d.ts",
+        "src/typings/mocha/mocha.d.ts",
+        "src/typings/node-file-exists/node-file-exists.d.ts",
+        "src/typings/node/node.d.ts",
+        "src/typings/process-console-log/index.d.ts",
+        "src/typings/set/set.d.ts",
+        "src/typings/tsd.d.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
+}
