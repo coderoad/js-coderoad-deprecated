@@ -1,1 +1,1 @@
-export default `require = require('rewire');`;
+export default `require = require('rewire-coderoad');`;
