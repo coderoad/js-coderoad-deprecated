@@ -1,16 +1,18 @@
-import babelModules from './helpers/babelModules';
-import { logger } from 'process-console-log';
-import fileExists from './helpers/fileExists';
-import overrideRequire from './helpers/overrideRequire';
-import fixImportPaths from './helpers/importPaths';
+import fixImportPaths from './importPaths';
 
-const jsCodeRoad = ({dir, content}) => (
-  `(function(){\n'use strict;'\n`
-  + '// babel\n' + babelModules(dir)
-  + '// logger\n' + logger + '\n'
-  + '// file exists\n' + fileExists(dir)
-  + '// overrideRequire\n' + overrideRequire
-  + '// fix imports\n' + fixImportPaths({dir, content})
-  + '}());'
+const jsCodeRoad = ({dir, content}) => (`
+(function(){'use strict';
+require('babel-register')({plugins:[['transform-es2015-modules-commonjs',{loose:true,sourceRoot:'${dir}'}]]});
+${require('process-console-log').logger}
+let _fileExists = require('node-file-exists');
+let _resolve = require('fs').resolve;
+global.exists = (p) => _fileExists(_resolve('${dir}',p));
+require = require('rewire-coderoad');
+
+// unit tests
+
+${fixImportPaths({dir, content})}
+
+}());`
 );
 export default jsCodeRoad;

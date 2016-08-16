@@ -16,11 +16,8 @@
         "src/typings/**/*.d.ts"
     ],
     "files": [
+        "src/importPaths.ts",
         "src/index.ts",
-        "src/helpers/babelModules.ts",
-        "src/helpers/fileExists.ts",
-        "src/helpers/importPaths.ts",
-        "src/helpers/overrideRequire.ts",
         "src/rewire-ts/__get__.ts",
         "src/rewire-ts/addImportsAsVars.ts",
         "src/rewire-ts/fileExists.ts",
