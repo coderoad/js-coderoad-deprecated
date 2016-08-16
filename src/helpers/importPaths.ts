@@ -5,12 +5,13 @@ import { join } from 'path';
   fixImportPaths will replace paths with absolute paths
 */
 
-// import or require statement
+// import or require statement with BASE
 const importPathRegex =
  /require\(["'](BASE.+)["']\)([a-zA-Z0-9\-\_]+)?|^import.+?\s?["'](BASE.+)["'];?$/m;
 const relativePathRegex = /^BASE/;
 
 export default function fixImportPaths({dir, content}): string {
+
   // collect import lines
   let entries = new Set([]);
 
@@ -37,5 +38,5 @@ export default function fixImportPaths({dir, content}): string {
     }
 		// no match, return line
     return line;
-  }).join('\n');
+  }).join('\n') + '\n';
 }
