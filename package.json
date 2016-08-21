@@ -1,6 +1,6 @@
 {
   "name": "js-coderoad",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "bundled javascript features for coderoad test runners",
   "keywords": [
     "coderoad",
