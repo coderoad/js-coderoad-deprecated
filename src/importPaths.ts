@@ -31,10 +31,10 @@ export default function fixImportPaths({dir, content}): string {
 
       // fix buggy Windows paths
       if (isWindows) {
-        importPath = importPath.split('\\').join('\\\\');
+        newPath = newPath.split('\\').join('\\\\');
       }
 
-      let newLine = line.replace(importPath, newPath);
+      const newLine = line.replace(importPath, newPath);
       // add to map of entry files
       if (!entries.has(newLine)) {
         entries.add(newLine);
