@@ -4,13 +4,14 @@ import { join } from 'path';
   import paths won't match the context of the test runner
   fixImportPaths will replace paths with absolute paths
 */
+const isWindows = window.navigator.appVersion.indexOf('Win') > -1;
 
 // import or require statement
 const importPathRegex =
  /require\(["'](BASE.+)["']\)([a-zA-Z0-9\-\_]+)?|^import.+?\s?["'](BASE.+)["'];?$/m;
 const relativePathRegex = /^BASE/;
 
-export default function fixImportPaths({dir, content, isWindows}): string {
+export default function fixImportPaths({dir, content}): string {
   // collect import lines
   let entries = new Set([]);
 
