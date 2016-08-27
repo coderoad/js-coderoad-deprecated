@@ -10,7 +10,7 @@ const importPathRegex =
  /require\(["'](BASE.+)["']\)([a-zA-Z0-9\-\_]+)?|^import.+?\s?["'](BASE.+)["'];?$/m;
 const relativePathRegex = /^BASE/;
 
-export default function fixImportPaths({dir, content}): string {
+export default function fixImportPaths({dir, content, isWindows}): string {
   // collect import lines
   let entries = new Set([]);
 
@@ -21,12 +21,18 @@ export default function fixImportPaths({dir, content}): string {
       return line;
     }
     // multiple cases due to import or require regex
-    const importPath = isMatch[1] || isMatch[2];
+    let importPath = isMatch[1] || isMatch[2] || isMatch[3];
     // import path: may be relative or absolute
 
     // is a relative path
     if (importPath.match(relativePathRegex)) {
       let newPath = join(dir, importPath.replace('BASE', ''));
+
+      // fix buggy Windows paths
+      if (isWindows) {
+        importPath = importPath.split('\\').join('\\\\');
+      }
+
       let newLine = line.replace(importPath, newPath);
       // add to map of entry files
       if (!entries.has(newLine)) {
