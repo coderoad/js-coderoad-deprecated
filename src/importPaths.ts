@@ -1,10 +1,10 @@
 import { join } from 'path';
+import { isWindows, fixPathForWindows } from './system';
 
 /*
   import paths won't match the context of the test runner
   fixImportPaths will replace paths with absolute paths
 */
-const isWindows = window.navigator.appVersion.indexOf('Win') > -1;
 
 // import or require statement
 const importPathRegex =
@@ -31,7 +31,7 @@ export default function fixImportPaths({dir, content}): string {
 
       // fix buggy Windows paths
       if (isWindows) {
-        newPath = newPath.split('\\').join('\\\\');
+        newPath = fixPathForWindows(newPath);
       }
 
       const newLine = line.replace(importPath, newPath);
