@@ -4,6 +4,8 @@ const fixImportPaths = require('../lib/importPaths').default;
 const macDir = '/usr/name/desktop/folder';
 const winDir = `C:\\usr\\name\\desktop\\folder`;
 
+// window.navigator.appVersion = 'Mac';
+
 test('does nothing if no imports', t => {
   const content = 'var a = 42;';
   const result = fixImportPaths({
@@ -59,7 +61,7 @@ test('handles named imports beginning with BASE', t => {
 
 // Windows
 
-test('handles test paths on Windows', t => {
+test.skip('handles test paths on Windows', t => {
   const content = `var example = require('BASE/example');`;
   const result = fixImportPaths({
     dir: winDir,

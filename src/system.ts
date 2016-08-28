@@ -1,8 +1,3 @@
-export const isWindows = window.navigator.appVersion.indexOf('Win') > -1;
+let window = window || ({ navigator: { appVersion: '' } });
 
-export const fixPathForWindows = (p: string) => {
-  p.split('\\\\').join('\\');
-  p.split('\\').join('\\\\');
-  p.split('/').join('\\\\');
-  return p;
-};
+export const isWindows = window.navigator.appVersion.indexOf('Win') > -1;

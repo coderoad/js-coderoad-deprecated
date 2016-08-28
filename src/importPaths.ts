@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { isWindows, fixPathForWindows } from './system';
+import { isWindows } from './system';
 
 /*
   import paths won't match the context of the test runner
@@ -12,9 +12,6 @@ const importPathRegex =
 const relativePathRegex = /^BASE/;
 
 export default function fixImportPaths({dir, content}): string {
-  // collect import lines
-  let entries = new Set([]);
-
   return content.split('\n').map(line => {
     // line has an import or require ?
     const isMatch = line.match(importPathRegex);
@@ -27,20 +24,19 @@ export default function fixImportPaths({dir, content}): string {
 
     // is a relative path
     if (importPath.match(relativePathRegex)) {
-      let newPath = join(dir, importPath.replace('BASE', ''));
+      let newPath;
 
-      // fix buggy Windows paths
       if (isWindows) {
-        newPath = fixPathForWindows(newPath);
+        // fix buggy Windows paths
+        // note: necessary to split and join before newPath is set to
+        // a variable or backslashes are interpreted as escaped characters
+        newPath = join(dir, importPath.replace('BASE', ''))
+          .split('\\').join('\\\\');
+      } else {
+         newPath = join(dir, importPath.replace('BASE', ''));
       }
 
-      const newLine = line.replace(importPath, newPath);
-      // add to map of entry files
-      if (!entries.has(newLine)) {
-        entries.add(newLine);
-        return newLine;
-      }
-      return '';
+      return line.replace(importPath, newPath);
     }
 		// no match, return line
     return line;
