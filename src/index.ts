@@ -1,12 +1,9 @@
 import fixImportPaths from './importPaths';
-import { isWindows } from './system';
 
 const jsCodeRoad = ({dir, content}) => {
 
   // fix Windows paths
-  if (isWindows) {
-    dir = dir.split('\\').join('\\\\');
-  }
+  dir = dir.split('\\').join('\\\\');
 
   return `(function(){'use strict';
 require('babel-register')({plugins:[

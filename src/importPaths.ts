@@ -1,5 +1,4 @@
 import { join } from 'path';
-import { isWindows } from './system';
 
 /*
   import paths won't match the context of the test runner
@@ -24,18 +23,9 @@ export default function fixImportPaths({dir, content}): string {
 
     // is a relative path
     if (importPath.match(relativePathRegex)) {
-      let newPath;
-
-      if (isWindows) {
-        // fix buggy Windows paths
-        // note: necessary to split and join before newPath is set to
-        // a variable or backslashes are interpreted as escaped characters
-        newPath = join(dir, importPath.replace('BASE', ''))
-          .split('\\').join('\\\\');
-      } else {
-         newPath = join(dir, importPath.replace('BASE', ''));
-      }
-
+      let newPath = join(dir, importPath.replace('BASE', ''))
+        // fix windows paths
+        .split('\\').join('\\\\');
       return line.replace(importPath, newPath);
     }
 		// no match, return line
